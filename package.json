@@ -13,7 +13,11 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build"
   },
-  "peerDependencies": {},
+  "peerDependencies": {
+    "@types/ws": "^6.0.1",
+    "eventemitter3": "^3.1.0",
+    "isomorphic-ws": "^4.0.1"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -33,6 +37,9 @@
     "husky": "^4.2.0",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
-    "typescript": "^3.7.5"
+    "typescript": "^3.7.5",
+    "@types/ws": "^6.0.1",
+    "eventemitter3": "^3.1.0",
+    "isomorphic-ws": "^4.0.1"
   }
 }

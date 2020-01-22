@@ -1,7 +1,7 @@
-import { sum } from '../src';
+import { JsonClient } from '../src';
 
-describe('blah', () => {
-  it('works', () => {
-    expect(sum(1, 1)).toEqual(2);
+describe('JsonClient', () => {
+  it('exists', () => {
+        expect(JsonClient).toBeTruthy();
   });
 });
