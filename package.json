@@ -26,7 +26,7 @@
     "trailingComma": "es5"
   },
   "name": "json-services-client",
-  "author": "yallie",
+  "author": "Alexey Yakovlev <yallie@yandex.ru>",
   "module": "dist/json-services-client.esm.js",
   "devDependencies": {
     "@types/jest": "^24.9.0",

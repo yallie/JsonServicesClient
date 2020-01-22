@@ -1,0 +1,7 @@
+﻿{
+    "jest.debugMode": true,
+    // "jest.pathToConfig": "jest.json",
+    "jest.pathToJest": "yarn test",
+    "prettier.semi": false,
+    "editor.detectIndentation": false
+}
