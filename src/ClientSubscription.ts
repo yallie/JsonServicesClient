@@ -9,7 +9,7 @@ export class ClientSubscription {
         [key: string]: string;
     }
 
-    public invoke = (eventArgs: object) => {
+    public invoke = (eventArgs: { [key: string]: any }) => {
         // TODO: handle 'this' context?
         // apply eventFilter locally (we might get events matching other local subscriber's event filter)
         if (EventFilter.matches(this.eventFilter, eventArgs)) {

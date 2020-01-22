@@ -1,4 +1,4 @@
-import { IReturnVoid } from './IReturn';
+import { IReturnVoid } from '../../src/IReturn';
 
 export class DelayRequest implements IReturnVoid {
     constructor(ms?: number) {

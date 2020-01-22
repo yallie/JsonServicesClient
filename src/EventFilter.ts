@@ -3,7 +3,7 @@ export interface IEventFilter {
 }
 
 export class EventFilter {
-    public static matches(eventFilter?: IEventFilter | null, eventArgs?: { [key: string]: string } | null): boolean {
+    public static matches(eventFilter?: IEventFilter | null, eventArgs?: { [key: string]: any } | null): boolean {
         // empty filter matches anything
         if (eventFilter === null ||
             eventFilter === undefined ||
