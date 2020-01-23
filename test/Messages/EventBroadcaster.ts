@@ -1,4 +1,4 @@
-import { IReturnVoid } from 'src/JsonServices/IReturn';
+import { IReturnVoid } from '../../src/IReturn';
 
 export class EventBroadcaster implements IReturnVoid {
     public EventName: string;

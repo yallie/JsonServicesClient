@@ -1,4 +1,4 @@
-import { IReturn } from '../JsonServices/IReturn';
+import { IReturn } from '../../src/IReturn';
 import { CalculateResponse } from './CalculateResponse';
 
 export class Calculate implements IReturn<CalculateResponse> {
