@@ -1,3 +1,7 @@
+# JsonServices client
+
+This is a TypeScript client for the [JsonServices](https://github.com/yallie/JsonServices) library.
+
 # TSDX Bootstrap
 
 This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
