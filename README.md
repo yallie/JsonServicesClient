@@ -1,5 +1,9 @@
 # JsonServices client
 
+[![Appveyor build status](https://ci.appveyor.com/api/projects/status/jgilsn93anqp7x1c?svg=true)](https://ci.appveyor.com/project/yallie/jsonservicesclient)
+[![Tests](https://img.shields.io/appveyor/tests/yallie/JsonServicesClient.svg)](https://ci.appveyor.com/project/yallie/JsonServicesClient/build/tests)
+[![Code coverage](https://codecov.io/gh/yallie/JsonServicesClient/branch/master/graph/badge.svg)](https://codecov.io/gh/yallie/JsonServicesClient)
+
 This is a TypeScript client for the [JsonServices](https://github.com/yallie/JsonServices) library.
 
 # TSDX Bootstrap
