@@ -40,6 +40,7 @@
     "eslint": "^6.x",
     "eslint-plugin-react-hooks": "^1.x",
     "husky": "^4.2.0",
+    "jest-junit": "^10.0.0",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.5",
