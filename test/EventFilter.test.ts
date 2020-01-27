@@ -37,6 +37,10 @@ describe("EventFilter", () => {
         expect(EventFilter.numberMatches("12345", 123)).toBeFalsy()
         expect(EventFilter.numberMatches("123,45", 123)).toBeTruthy()
         expect(EventFilter.numberMatches("123,45.67", 45.67)).toBeTruthy()
+
+        expect(EventFilter.matches({ "a": "10" }, { "a": 10 })).toBeTruthy()
+        expect(EventFilter.matches({ "b": "1,2,3" }, { "b": 3 })).toBeTruthy()
+        expect(EventFilter.matches({ "b": "1,2,3" }, { "b": 4 })).toBeFalsy()
     })
 
     test("boolMatches test cases", () => {
@@ -48,6 +52,10 @@ describe("EventFilter", () => {
         expect(EventFilter.boolMatches("true", false)).toBeFalsy()
         expect(EventFilter.boolMatches("FALSE", false)).toBeTruthy()
         expect(EventFilter.boolMatches("True", true)).toBeTruthy()
+
+        expect(EventFilter.matches({ "a": "true" }, { "a": true })).toBeTruthy()
+        expect(EventFilter.matches({ "b": "false" }, { "b": false })).toBeTruthy()
+        expect(EventFilter.matches({ "b": "false" }, { "b": true })).toBeFalsy()
     })
 
     test("eventArgs with string property tests", () => {
