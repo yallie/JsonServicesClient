@@ -1,7 +1,7 @@
-import { JsonClient } from '../src';
+import { JsonClient } from "../src"
 
-describe('JsonClient', () => {
-  it('exists', () => {
-        expect(JsonClient).toBeTruthy();
-  });
-});
+describe("JsonClient", () => {
+    it("exists", () => {
+        expect(JsonClient).toBeTruthy()
+    })
+})

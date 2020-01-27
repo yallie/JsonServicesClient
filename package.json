@@ -14,9 +14,9 @@
     "prepare": "tsdx build"
   },
   "peerDependencies": {
-    "eslint-plugin-react-hooks": "^1.x",
-    "eslint": "^6.x",
     "@types/ws": "^6.0.1",
+    "eslint": "^6.x",
+    "eslint-plugin-react-hooks": "^1.x",
     "eventemitter3": "^3.1.0",
     "isomorphic-ws": "^4.0.1",
     "ws": "^6.1.2"
@@ -27,9 +27,9 @@
     }
   },
   "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": false,
     "trailingComma": "es5"
   },
   "name": "json-services-client",
@@ -37,16 +37,17 @@
   "module": "dist/json-services-client.esm.js",
   "devDependencies": {
     "@types/jest": "^24.9.0",
+    "@types/ws": "^6.0.1",
+    "@typescript-eslint/parser": "^2.17.0",
     "eslint": "^6.x",
     "eslint-plugin-react-hooks": "^1.x",
+    "eventemitter3": "^3.1.0",
     "husky": "^4.2.0",
+    "isomorphic-ws": "^4.0.1",
     "jest-junit": "^10.0.0",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.5",
-    "@types/ws": "^6.0.1",
-    "eventemitter3": "^3.1.0",
-    "isomorphic-ws": "^4.0.1",
     "ws": "^6.1.2"
   }
 }

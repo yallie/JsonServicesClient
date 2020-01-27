@@ -1,11 +1,13 @@
 export class AuthResponse {
-    public Parameters: {
+    public Parameters!: {
         [key: string]: string
-    };
+    }
 
-    public AuthenticatedIdentity: {
-        Name: string;
-        AuthenticationType: string;
-        IsAuthenticated: boolean;
+    public SessionId!: string
+
+    public AuthenticatedIdentity!: {
+        Name: string
+        AuthenticationType: string
+        IsAuthenticated: boolean
     }
 }

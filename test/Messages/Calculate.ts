@@ -1,15 +1,15 @@
-import { IReturn } from '../../src/IReturn';
-import { CalculateResponse } from './CalculateResponse';
+import { IReturn } from "../../src/IReturn"
+import { CalculateResponse } from "./CalculateResponse"
 
 export class Calculate implements IReturn<CalculateResponse> {
-    public FirstOperand: number;
-    public Operation: string;
-    public SecondOperand: number;
+    public FirstOperand!: number
+    public Operation!: string
+    public SecondOperand!: number
     public getTypeName() {
         return "JsonServices.Tests.Messages.Calculate"
     }
     public createResponse() {
-        return new CalculateResponse();
+        return new CalculateResponse()
     }
 }
 

@@ -1,5 +1,5 @@
-import JsonClient from './JsonClient';
+import JsonClient from "./JsonClient"
 
 export interface ICredentials {
-    authenticate(client: JsonClient): Promise<any>;
+    authenticate(client: JsonClient): Promise<string>
 }
