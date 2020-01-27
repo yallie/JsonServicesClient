@@ -7,6 +7,7 @@ describe("EventFilter", () => {
         expect(EventFilter.matches(null, undefined)).toBeTruthy()
         expect(EventFilter.matches({}, null)).toBeTruthy()
         expect(EventFilter.matches({}, undefined)).toBeTruthy()
+        expect(EventFilter.matches({ a: "0" }, { a: "0" })).toBeTruthy()
     })
 
     test("filter with empty property matches an argument that has this property", () => {
@@ -48,6 +49,7 @@ describe("EventFilter", () => {
         expect(EventFilter.numberMatches(undefined, 1)).toBeTruthy()
         expect(EventFilter.numberMatches("123", 123)).toBeTruthy()
         expect(EventFilter.numberMatches("123", 45)).toBeFalsy()
+        expect(EventFilter.numberMatches("123", null)).toBeFalsy()
         expect(EventFilter.numberMatches("12345", 123)).toBeFalsy()
         expect(EventFilter.numberMatches("123,45", 123)).toBeTruthy()
         expect(EventFilter.numberMatches("123,45.67", 45.67)).toBeTruthy()

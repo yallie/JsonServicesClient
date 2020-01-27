@@ -6,19 +6,29 @@ import { DelayRequest } from "./Messages/DelayRequest"
 import { EventBroadcaster } from "./Messages/EventBroadcaster"
 import { GetVersion } from "./Messages/GetVersion"
 
-describe("JsonClient", () => {
-    it("should contain at least one test", () => {
-        expect(true).toBeTruthy()
-    })
-})
-
 // sample server to connect to
 const sampleServerUrl = "ws://127.0.0.1:8765"
+
+describe("JsonClient", () => {
+    it("should compute message name using class name or getTypeName function result", () => {
+        const client = new JsonClient(sampleServerUrl)
+        expect(client.nameOf(undefined)).toEqual("null")
+        expect(client.nameOf(null)).toEqual("null")
+        expect(client.nameOf("")).toEqual("null")
+
+        class Sample {}
+        expect(client.nameOf(new Sample())).toEqual("Sample")
+
+        expect(client.nameOf(new VersionRequest())).toEqual("rpc.version")
+        class AnotherSample { public getTypeName = () => "Another" }
+        expect(client.nameOf(new AnotherSample())).toEqual("Another")
+    })
+})
 
 // the rest of tests are enabled if JsonServicesSampleServer environment variable is set
 // suggested here: https://github.com/facebook/jest/issues/3652
 const sampleServer = process.env.JsonServicesSampleServer
-const conditional = sampleServer ? describe : describe.skip
+const conditional = sampleServer ? describe : describe//.skip
 
 conditional("JsonClient", () => {
     it("should connect to the sample service", async () => {
@@ -28,6 +38,22 @@ conditional("JsonClient", () => {
         expect(sessionId).toBeTruthy()
         expect(typeof sessionId).toBe("string")
         expect(client.sessionId).toEqual(sessionId)
+
+        await client.disconnect()
+    })
+
+    it("should call standard rpc.version service", async () => {
+        const client = new JsonClient(sampleServerUrl)
+        const sessionId = await client.connect()
+
+        expect(sessionId).toBeTruthy()
+        expect(client.sessionId).toEqual(sessionId)
+
+        let version = await client.call(new VersionRequest())
+        expect(version).toBeTruthy()
+        expect(version.ProductName).toEqual("JsonServicesSampleServer")
+        expect(version.EngineVersion).toEqual("0.0.0.1")
+        expect(version.ProductVersion).toEqual("0.0.1-beta")
 
         await client.disconnect()
     })
@@ -139,6 +165,26 @@ conditional("JsonClient", () => {
         expect(result.Result).toEqual(0)
 
         await client.disconnect()
+    })
+
+    it("should connect automatically when subscribing to events", async () => {
+        let client = new JsonClient(sampleServerUrl)
+        expect(client.connected).toBeFalsy()
+
+        let fired = false
+        expect(fired).toBeFalsy()
+
+        let unsubscribe = await client.subscribe({
+            eventName: "SomeEvent",
+            eventHandler: _ => {
+                fired = true
+            },
+        })
+
+        expect(client.connected).toBeTruthy()
+        await unsubscribe()
+        await client.disconnect()
+        expect(client.connected).toBeFalsy()
     })
 
     it("should subscribe to and unsubscribe from events", async () => {
