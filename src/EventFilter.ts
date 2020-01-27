@@ -7,8 +7,7 @@ export class EventFilter {
         // empty filter matches anything
         if (eventFilter === null ||
             eventFilter === undefined ||
-            Object.keys(eventFilter).length === 0 ||
-			Object.keys(eventFilter).find(k => ("" + eventFilter[k]) !== "") === undefined) {
+            Object.keys(eventFilter).length === 0) {
             return true
         }
 

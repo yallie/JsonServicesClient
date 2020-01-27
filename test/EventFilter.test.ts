@@ -9,6 +9,20 @@ describe("EventFilter", () => {
         expect(EventFilter.matches({}, undefined)).toBeTruthy()
     })
 
+    test("filter with empty property matches an argument that has this property", () => {
+        expect(EventFilter.matches({ a: null }, undefined)).toBeFalsy()
+        expect(EventFilter.matches({ a: null }, {})).toBeFalsy()
+        expect(EventFilter.matches({ a: null }, { a: undefined })).toBeFalsy()
+        expect(EventFilter.matches({ a: null }, { a: null })).toBeTruthy()
+        expect(EventFilter.matches({ a: null }, { a: "Hello" })).toBeTruthy()
+
+        expect(EventFilter.matches({ a: "" }, undefined)).toBeFalsy()
+        expect(EventFilter.matches({ a: "" }, {})).toBeFalsy()
+        expect(EventFilter.matches({ a: "" }, { a: undefined })).toBeFalsy()
+        expect(EventFilter.matches({ a: "" }, { a: null })).toBeTruthy()
+        expect(EventFilter.matches({ a: "" }, { a: "Hello" })).toBeTruthy()
+    })
+
     test("missing property doesn't match the filter", () => {
         let filter = { name: "Bozo"}
         expect(EventFilter.matches(filter, undefined)).toBeFalsy()
