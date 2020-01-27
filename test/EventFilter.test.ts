@@ -9,6 +9,15 @@ describe("EventFilter", () => {
         expect(EventFilter.matches({}, undefined)).toBeTruthy()
     })
 
+    test("missing property doesn't match the filter", () => {
+        let filter = { name: "Bozo"}
+        expect(EventFilter.matches(filter, undefined)).toBeFalsy()
+        expect(EventFilter.matches(filter, null)).toBeFalsy()
+        expect(EventFilter.matches(filter, {})).toBeFalsy()
+        expect(EventFilter.matches(filter, { name: "Bonzo" })).toBeFalsy()
+        expect(EventFilter.matches(filter, { name: "Bozo" })).toBeTruthy()
+    })
+
     test("stringMatches test cases", () => {
         expect(EventFilter.stringMatches(null, null)).toBeTruthy()
         expect(EventFilter.stringMatches(null, undefined)).toBeTruthy()
