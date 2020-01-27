@@ -1,5 +1,5 @@
 import { EventFilter } from "./EventFilter"
-import { SubscriptionMessage } from "./SubscriptionMessage"
+import { SubscriptionMessage } from "./Messages/SubscriptionMessage"
 
 export class ClientSubscription {
     public subscriptionId!: string

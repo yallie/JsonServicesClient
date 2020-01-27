@@ -1,5 +1,5 @@
 import { AuthResponse } from "./AuthResponse"
-import { IReturn } from "./IReturn"
+import { IReturn } from "../IReturn"
 
 export class AuthRequest implements IReturn<AuthResponse> {
     public static userNameKey = "UserName"

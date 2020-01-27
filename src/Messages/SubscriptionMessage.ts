@@ -1,4 +1,4 @@
-import { IReturnVoid } from "./IReturn"
+import { IReturnVoid } from "../IReturn"
 
 interface ISubscription {
     SubscriptionId: string

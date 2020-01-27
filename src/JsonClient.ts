@@ -6,7 +6,7 @@ import { ICredentials } from "./ICredentials"
 import { IJsonClient } from "./IJsonClient"
 import { IReturn, IReturnVoid } from "./IReturn"
 import { ISubscription } from "./ISubscription"
-import { LogoutMessage } from "./LogoutMessage"
+import { LogoutMessage } from "./Messages/LogoutMessage"
 import { IPendingMessageQueue, PendingMessage } from "./PendingMessage"
 import { RequestMessage } from "./RequestMessage"
 

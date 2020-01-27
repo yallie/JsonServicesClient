@@ -1,4 +1,4 @@
-import { AuthRequest } from "./AuthRequest"
+import { AuthRequest } from "./Messages/AuthRequest"
 import { ICredentials } from "./ICredentials"
 import { IJsonClient } from "./IJsonClient"
 

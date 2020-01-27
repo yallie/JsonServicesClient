@@ -1,5 +1,5 @@
 import { CredentialsBase } from "../src/CredentialsBase"
-import { VersionRequest } from "./Messages/VersionRequest"
+import { VersionRequest } from "../src/Messages/VersionRequest"
 import { IJsonRpcError, JsonClient } from "../src/JsonClient"
 import { Calculate } from "./Messages/Calculate"
 import { DelayRequest } from "./Messages/DelayRequest"

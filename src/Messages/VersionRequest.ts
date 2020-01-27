@@ -1,4 +1,4 @@
-import { IReturn } from "../../src/IReturn"
+import { IReturn } from "../IReturn"
 import { VersionResponse } from "./VersionResponse"
 
 export class VersionRequest implements IReturn<VersionResponse> {
