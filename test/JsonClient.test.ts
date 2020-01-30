@@ -28,7 +28,7 @@ describe("JsonClient", () => {
 // the rest of tests are enabled if JsonServicesSampleServer environment variable is set
 // suggested here: https://github.com/facebook/jest/issues/3652
 const sampleServer = process.env.JsonServicesSampleServer
-const conditional = sampleServer ? describe : describe//.skip
+const conditional = sampleServer ? describe : describe.skip
 
 conditional("JsonClient", () => {
     it("should connect to the sample service", async () => {
