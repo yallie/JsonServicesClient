@@ -16,7 +16,7 @@
   "peerDependencies": {
     "@types/ws": "^6.0.1",
     "eslint": "^6.x",
-    "eslint-plugin-react-hooks": "^1.x",
+    "eslint-plugin-react-hooks": "^2.x",
     "eventemitter3": "^3.1.0",
     "isomorphic-ws": "^4.0.1",
     "ws": "^6.1.2"
@@ -36,18 +36,18 @@
   "author": "Alexey Yakovlev <yallie@yandex.ru>",
   "module": "dist/json-services-client.esm.js",
   "devDependencies": {
-    "@types/jest": "^24.9.0",
-    "@types/ws": "^6.0.1",
-    "@typescript-eslint/parser": "^2.17.0",
+    "@types/jest": "^25.1.1",
+    "@types/ws": "^7.2.1",
+    "@typescript-eslint/parser": "^2.18.0",
     "eslint": "^6.x",
-    "eslint-plugin-react-hooks": "^1.x",
-    "eventemitter3": "^3.1.0",
-    "husky": "^4.2.0",
+    "eslint-plugin-react-hooks": "^2.x",
+    "eventemitter3": "^4.0.0",
+    "husky": "^4.2.1",
     "isomorphic-ws": "^4.0.1",
     "jest-junit": "^10.0.0",
     "tsdx": "^0.12.3",
     "tslib": "^1.10.0",
     "typescript": "^3.7.5",
-    "ws": "^6.1.2"
+    "ws": "^7.2.1"
   }
 }
