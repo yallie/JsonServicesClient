@@ -5,7 +5,6 @@ Object.defineProperty(exports, '__esModule', { value: true });
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var eventemitter3 = require('eventemitter3');
-var helpers = require('babel-plugin-transform-async-to-promises/helpers');
 var WebSocket = _interopDefault(require('isomorphic-ws'));
 
 var AuthResponse = function AuthResponse() {};
@@ -210,6 +209,32 @@ function () {
   return CredentialsBase;
 }();
 
+// A type of promise-like that resolves synchronously and supports only one observer
+var _iteratorSymbol =
+/*#__PURE__*/
+typeof Symbol !== "undefined" ? Symbol.iterator || (Symbol.iterator =
+/*#__PURE__*/
+Symbol("Symbol.iterator")) : "@@iterator"; // Asynchronously iterate through an object's values
+var _asyncIteratorSymbol =
+/*#__PURE__*/
+typeof Symbol !== "undefined" ? Symbol.asyncIterator || (Symbol.asyncIterator =
+/*#__PURE__*/
+Symbol("Symbol.asyncIterator")) : "@@asyncIterator"; // Asynchronously iterate on a value using it's async iterator if present, or its synchronous iterator if missing
+
+function _catch(body, recover) {
+  try {
+    var result = body();
+  } catch (e) {
+    return recover(e);
+  }
+
+  if (result && result.then) {
+    return result.then(void 0, recover);
+  }
+
+  return result;
+} // Asynchronously await a promise and pass the result to a finally continuation
+
 var LogoutMessage =
 /*#__PURE__*/
 function () {
@@ -364,7 +389,7 @@ function () {
           // this is crucial for the subsequent authenticate call
           _this3.connected = true;
 
-          var _temp4 = helpers._catch(function () {
+          var _temp4 = _catch(function () {
             // authenticate
             return Promise.resolve(creds.authenticate(_this3)).then(function (_creds$authenticate) {
               _this3.sessionId = _creds$authenticate;

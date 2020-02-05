@@ -1,5 +1,4 @@
 import { EventEmitter } from 'eventemitter3';
-import { _catch } from 'babel-plugin-transform-async-to-promises/helpers';
 import WebSocket from 'isomorphic-ws';
 
 var AuthResponse = function AuthResponse() {};
@@ -203,6 +202,32 @@ function () {
 
   return CredentialsBase;
 }();
+
+// A type of promise-like that resolves synchronously and supports only one observer
+var _iteratorSymbol =
+/*#__PURE__*/
+typeof Symbol !== "undefined" ? Symbol.iterator || (Symbol.iterator =
+/*#__PURE__*/
+Symbol("Symbol.iterator")) : "@@iterator"; // Asynchronously iterate through an object's values
+var _asyncIteratorSymbol =
+/*#__PURE__*/
+typeof Symbol !== "undefined" ? Symbol.asyncIterator || (Symbol.asyncIterator =
+/*#__PURE__*/
+Symbol("Symbol.asyncIterator")) : "@@asyncIterator"; // Asynchronously iterate on a value using it's async iterator if present, or its synchronous iterator if missing
+
+function _catch(body, recover) {
+  try {
+    var result = body();
+  } catch (e) {
+    return recover(e);
+  }
+
+  if (result && result.then) {
+    return result.then(void 0, recover);
+  }
+
+  return result;
+} // Asynchronously await a promise and pass the result to a finally continuation
 
 var LogoutMessage =
 /*#__PURE__*/
