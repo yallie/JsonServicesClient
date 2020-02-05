@@ -13,12 +13,6 @@
     "lint": "tsdx lint",
     "prepare": "tsdx build"
   },
-  "peerDependencies": {
-    "@types/ws": "^7.2.1",
-    "eventemitter3": "^4.0.0",
-    "isomorphic-ws": "^4.0.1",
-    "ws": "^7.2.1"
-  },
   "husky": {
     "hooks": {
       "pre-commit": "tsdx lint"
@@ -33,10 +27,20 @@
   "name": "json-services-client",
   "author": "Alexey Yakovlev <yallie@yandex.ru>",
   "module": "dist/json-services-client.esm.js",
+  "peerDependencies": {
+    "@types/ws": "^7.2.1",
+    "eventemitter3": "^4.0.0",
+    "isomorphic-ws": "^4.0.1",
+    "ws": "^7.2.1"
+  },
   "devDependencies": {
+    "@babel/core": "^7.8.4",
     "@types/jest": "^25.1.1",
+    "@types/node": "^13.7.0",
     "@types/ws": "^7.2.1",
     "@typescript-eslint/parser": "^2.18.0",
+    "@yarnpkg/pnpify": "^2.0.0-rc.17",
+    "babel-plugin-transform-async-to-promises": "^0.8.15",
     "eslint": "^6.x",
     "eslint-plugin-react-hooks": "^2.x",
     "eventemitter3": "^4.0.0",

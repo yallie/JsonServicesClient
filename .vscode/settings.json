@@ -1,7 +1,8 @@
-﻿{
-    "jest.debugMode": true,
-    // "jest.pathToConfig": "jest.json",
-    "jest.pathToJest": "yarn test",
-    "prettier.semi": false,
-    "editor.detectIndentation": false
+{
+  "jest.debugMode": true,
+  "jest.pathToJest": "yarn test",
+  "prettier.semi": false,
+  "editor.detectIndentation": false,
+  "typescript.tsdk": ".vscode/pnpify/typescript/lib",
+  "eslint.nodePath": ".vscode/pnpify"
 }
