@@ -2,6 +2,22 @@ import { EventEmitter } from 'eventemitter3';
 import { _catch } from 'babel-plugin-transform-async-to-promises/helpers';
 import WebSocket from 'isomorphic-ws';
 
+var AuthResponse = function AuthResponse() {};
+
+var AuthRequest = function AuthRequest() {
+  this.getTypeName = function () {
+    return "rpc.authenticate";
+  };
+
+  this.createResponse = function () {
+    return new AuthResponse();
+  };
+
+  this.Parameters = {};
+};
+AuthRequest.userNameKey = "UserName";
+AuthRequest.passwordKey = "Password";
+
 var EventFilter =
 /*#__PURE__*/
 function () {
@@ -156,22 +172,6 @@ var ClientSubscriptionManager = function ClientSubscriptionManager() {
     _this.emitter.emit(eventName, eventArgs);
   };
 };
-
-var AuthResponse = function AuthResponse() {};
-
-var AuthRequest = function AuthRequest() {
-  this.getTypeName = function () {
-    return "rpc.authenticate";
-  };
-
-  this.createResponse = function () {
-    return new AuthResponse();
-  };
-
-  this.Parameters = {};
-};
-AuthRequest.userNameKey = "UserName";
-AuthRequest.passwordKey = "Password";
 
 var CredentialsBase =
 /*#__PURE__*/
@@ -655,5 +655,6 @@ function () {
   return VersionRequest;
 }();
 
+export default JsonClient;
 export { AuthRequest, AuthResponse, ClientSubscription, ClientSubscriptionManager, CredentialsBase, EventFilter, JsonClient, LogoutMessage, SubscriptionMessage, VersionRequest, VersionResponse };
 //# sourceMappingURL=json-services-client.esm.js.map

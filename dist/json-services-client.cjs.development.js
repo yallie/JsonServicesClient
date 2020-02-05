@@ -8,6 +8,22 @@ var eventemitter3 = require('eventemitter3');
 var helpers = require('babel-plugin-transform-async-to-promises/helpers');
 var WebSocket = _interopDefault(require('isomorphic-ws'));
 
+var AuthResponse = function AuthResponse() {};
+
+var AuthRequest = function AuthRequest() {
+  this.getTypeName = function () {
+    return "rpc.authenticate";
+  };
+
+  this.createResponse = function () {
+    return new AuthResponse();
+  };
+
+  this.Parameters = {};
+};
+AuthRequest.userNameKey = "UserName";
+AuthRequest.passwordKey = "Password";
+
 var EventFilter =
 /*#__PURE__*/
 function () {
@@ -162,22 +178,6 @@ var ClientSubscriptionManager = function ClientSubscriptionManager() {
     _this.emitter.emit(eventName, eventArgs);
   };
 };
-
-var AuthResponse = function AuthResponse() {};
-
-var AuthRequest = function AuthRequest() {
-  this.getTypeName = function () {
-    return "rpc.authenticate";
-  };
-
-  this.createResponse = function () {
-    return new AuthResponse();
-  };
-
-  this.Parameters = {};
-};
-AuthRequest.userNameKey = "UserName";
-AuthRequest.passwordKey = "Password";
 
 var CredentialsBase =
 /*#__PURE__*/
@@ -672,4 +672,5 @@ exports.LogoutMessage = LogoutMessage;
 exports.SubscriptionMessage = SubscriptionMessage;
 exports.VersionRequest = VersionRequest;
 exports.VersionResponse = VersionResponse;
+exports.default = JsonClient;
 //# sourceMappingURL=json-services-client.cjs.development.js.map
