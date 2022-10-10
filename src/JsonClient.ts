@@ -13,7 +13,11 @@ import { RequestMessage } from "./RequestMessage"
 export interface IJsonRpcError {
     code: number
     message: string
-    data: object
+    data: Object
+}
+
+export function isJsonRpcError(e: unknown): e is IJsonRpcError {
+    return e && typeof e === "object" && "code" in e && "message" in e && "data" in e ? true : false
 }
 
 export interface IJsonClientOptions {
@@ -53,7 +57,7 @@ export class JsonClient implements IJsonClient {
         // do nothing by default
     }
 
-    public errorFilter = (_: Error | IJsonRpcError) => {
+    public errorFilter = (_: Error | IJsonRpcError | unknown) => {
         // do nothing by default
     }
 

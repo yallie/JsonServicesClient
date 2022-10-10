@@ -1,6 +1,6 @@
 import { CredentialsBase } from "../src/CredentialsBase"
 import { VersionRequest } from "../src/Messages/VersionRequest"
-import { IJsonRpcError, JsonClient } from "../src/JsonClient"
+import { IJsonRpcError, isJsonRpcError, JsonClient } from "../src/JsonClient"
 import { Calculate } from "./Messages/Calculate"
 import { DelayRequest } from "./Messages/DelayRequest"
 import { EventBroadcaster } from "./Messages/EventBroadcaster"
@@ -144,9 +144,15 @@ conditional("JsonClient", () => {
             result = await client.call(msg)
             fail("Service call 353 # 181 should yield an internal server error")
         } catch (e) {
-            expect(e.code).toEqual(-32603)
-            expect(e.message).toEqual("Internal server error: Bad operation: #")
-            expect(e.data.indexOf("Invalid")).toBeGreaterThan(0)
+            expect(isJsonRpcError(e)).toBeTruthy()
+            if (isJsonRpcError(e)) {
+                expect(e.code).toEqual(-32603)
+                expect(e.message).toEqual("Internal server error: Bad operation: #")
+                expect(typeof e.data).toEqual("string")
+                if (typeof e.data === "string") {
+                    expect(e.data.indexOf("Invalid")).toBeGreaterThan(0)
+                }
+            }
         }
 
         // 353 % 0
@@ -156,9 +162,15 @@ conditional("JsonClient", () => {
             result = await client.call(msg)
             fail("Service call 353 % 0 should yield a division by zero")
         } catch (e) {
-            expect(e.code).toEqual(-32603)
-            expect(e.message.startsWith("Internal server error")).toBeTruthy() // error message is locale-specific
-            expect(e.data.indexOf("DivideByZero")).toBeGreaterThan(0)
+            expect(isJsonRpcError(e)).toBeTruthy()
+            if (isJsonRpcError(e)) {
+                expect(e.code).toEqual(-32603)
+                expect(e.message.startsWith("Internal server error")).toBeTruthy() // error message is locale-specific
+                expect(typeof e.data).toEqual("string")
+                if (typeof e.data === "string") {
+                    expect(e.data.indexOf("DivideByZero")).toBeGreaterThan(0)
+                }
+            }
         }
 
         // 353 * 0
@@ -233,7 +245,7 @@ conditional("JsonClient", () => {
         const client = new JsonClient(badUrl)
 
         let fired = false
-        let error: Error | IJsonRpcError | null = null
+        let error: Error | IJsonRpcError | unknown = null
         client.errorFilter = e => {
             fired = true
             error = e
@@ -255,7 +267,7 @@ conditional("JsonClient", () => {
         await client.connect()
 
         let fired = false
-        let error: Error | IJsonRpcError | null = null
+        let error: Error | IJsonRpcError | unknown = null
         client.errorFilter = e => {
             fired = true
             error = e
@@ -299,7 +311,10 @@ conditional("JsonClient", () => {
             await promise
             fail("The promise should have been rejected")
         } catch (e) {
-            expect(e.code).toEqual(-32003)
+            expect(isJsonRpcError(e)).toBeTruthy()
+            if (isJsonRpcError(e)) {
+                expect(e.code).toEqual(-32003)
+            }
         }
 
         await client.disconnect()
