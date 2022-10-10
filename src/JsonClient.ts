@@ -13,11 +13,11 @@ import { RequestMessage } from "./RequestMessage"
 export interface IJsonRpcError {
     code: number
     message: string
-    data: Object
+    data?: Object
 }
 
 export function isJsonRpcError(e: unknown): e is IJsonRpcError {
-    return e && typeof e === "object" && "code" in e && "message" in e && "data" in e ? true : false
+    return e && typeof e === "object" && "code" in e && "message" in e ? true : false
 }
 
 export interface IJsonClientOptions {
@@ -126,6 +126,7 @@ export class JsonClient implements IJsonClient {
                 }
 
                 const e = new Error(message)
+                Object.assign(e, { code: -32004 })
                 this.errorFilter(e)
                 reject(e)
             }
@@ -140,7 +141,11 @@ export class JsonClient implements IJsonClient {
                     // great, now we're connected
                     this.reconnects = 0
                     resolve(this.sessionId)
-                } catch (e) {
+                } catch (error) {
+                    // make sure to return error code and the message
+                    let e = error || new Error("Couldn't connect to " + this.url)
+                    Object.assign(e, { code: -32004 })
+
                     // report failure
                     this.connected = false
                     this.errorFilter(e)

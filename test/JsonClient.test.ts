@@ -8,6 +8,7 @@ import { GetVersion } from "./Messages/GetVersion"
 
 // sample server to connect to
 const sampleServerUrl = "ws://127.0.0.1:8765"
+const nonExistingServerUrl = "ws://127.0.0.1:8766"
 
 describe("JsonClient", () => {
     it("should compute message name using class name or getTypeName function result", () => {
@@ -24,6 +25,19 @@ describe("JsonClient", () => {
             public getTypeName = () => "Another"
         }
         expect(client.nameOf(new AnotherSample())).toEqual("Another")
+    })
+
+    it("should fail to connect when no server is started", async () => {
+        const client = new JsonClient(nonExistingServerUrl)
+        try {
+            await client.connect()
+            fail("JsonClient wasn't expected to connect to non-existing server")
+        } catch (e) {
+            expect(isJsonRpcError(e)).toBeTruthy()
+            if (isJsonRpcError(e)) {
+                expect(e.code).toEqual(-32004)
+            }
+        }
     })
 })
 
