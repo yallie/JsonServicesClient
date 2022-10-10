@@ -1,6 +1,5 @@
 ﻿export class PendingMessage {
-    constructor(public id: string, public promise?: Promise<any>) {
-    }
+    constructor(public id: string, public promise?: Promise<any>) {}
 
     public resolve!: (result: any) => void
     public reject!: (error: any) => void

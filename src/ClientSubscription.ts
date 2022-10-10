@@ -6,7 +6,7 @@ export class ClientSubscription {
     public eventName!: string
     public eventHandler!: (eventArgs: object) => void
     public eventFilter?: {
-        [key: string]: string;
+        [key: string]: string
     }
 
     public invoke = (eventArgs: object) => {
@@ -19,12 +19,14 @@ export class ClientSubscription {
 
     public createSubscriptionMessage = () => {
         const msg = new SubscriptionMessage()
-        msg.Subscriptions = [{
-            Enabled: true,
-            EventName: this.eventName,
-            EventFilter: this.eventFilter,
-            SubscriptionId: this.subscriptionId,
-        }]
+        msg.Subscriptions = [
+            {
+                Enabled: true,
+                EventName: this.eventName,
+                EventFilter: this.eventFilter,
+                SubscriptionId: this.subscriptionId,
+            },
+        ]
         return msg
     }
 

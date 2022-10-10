@@ -3,7 +3,7 @@ import { ClientSubscription } from "./ClientSubscription"
 
 export class ClientSubscriptionManager {
     private emitter = new EventEmitter()
-    private subscriptions: { [subscriptionId: string]: ClientSubscription; } = {}
+    private subscriptions: { [subscriptionId: string]: ClientSubscription } = {}
 
     public add = (subscription: ClientSubscription) => {
         this.subscriptions[subscription.subscriptionId] = subscription

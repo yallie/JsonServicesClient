@@ -20,7 +20,9 @@ describe("JsonClient", () => {
         expect(client.nameOf(new Sample())).toEqual("Sample")
 
         expect(client.nameOf(new VersionRequest())).toEqual("rpc.version")
-        class AnotherSample { public getTypeName = () => "Another" }
+        class AnotherSample {
+            public getTypeName = () => "Another"
+        }
         expect(client.nameOf(new AnotherSample())).toEqual("Another")
     })
 })
@@ -78,7 +80,7 @@ conditional("JsonClient", () => {
         expect(client.connected).toBeFalsy()
         client.credentials = new CredentialsBase({
             userName: "foo",
-            password: "bar"
+            password: "bar",
         })
 
         const msg = new GetVersion()
@@ -95,7 +97,7 @@ conditional("JsonClient", () => {
         expect(client.connected).toBeFalsy()
         client.credentials = new CredentialsBase({
             userName: "foo",
-            password: "bar"
+            password: "bar",
         })
 
         const msg = new GetVersion()
@@ -141,7 +143,7 @@ conditional("JsonClient", () => {
         try {
             result = await client.call(msg)
             fail("Service call 353 # 181 should yield an internal server error")
-        } catch (e: any) {
+        } catch (e) {
             expect(e.code).toEqual(-32603)
             expect(e.message).toEqual("Internal server error: Bad operation: #")
             expect(e.data.indexOf("Invalid")).toBeGreaterThan(0)
@@ -153,7 +155,7 @@ conditional("JsonClient", () => {
         try {
             result = await client.call(msg)
             fail("Service call 353 % 0 should yield a division by zero")
-        } catch (e: any) {
+        } catch (e) {
             expect(e.code).toEqual(-32603)
             expect(e.message.startsWith("Internal server error")).toBeTruthy() // error message is locale-specific
             expect(e.data.indexOf("DivideByZero")).toBeGreaterThan(0)
@@ -193,7 +195,7 @@ conditional("JsonClient", () => {
 
         let fired = false
         let resolve: any
-        let promise = new Promise(r => resolve = r)
+        let promise = new Promise(r => (resolve = r))
         const unsubscribe = await client.subscribe({
             eventName: "SomeEvent",
             eventHandler: _ => {
@@ -213,7 +215,7 @@ conditional("JsonClient", () => {
 
         // reset event handler-related stuff
         fired = false
-        promise = new Promise(r => resolve = r)
+        promise = new Promise(r => (resolve = r))
         await unsubscribe()
 
         await client.call(msg)
@@ -265,7 +267,7 @@ conditional("JsonClient", () => {
         msg.Operation = "&"
         msg.SecondOperand = 181
 
-        try  {
+        try {
             await client.call(msg)
             fail("call(353 & 181) should have failed")
         } catch {
@@ -296,7 +298,7 @@ conditional("JsonClient", () => {
         try {
             await promise
             fail("The promise should have been rejected")
-        } catch (e: any) {
+        } catch (e) {
             expect(e.code).toEqual(-32003)
         }
 

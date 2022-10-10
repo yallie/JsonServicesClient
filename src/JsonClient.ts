@@ -49,7 +49,7 @@ export class JsonClient implements IJsonClient {
     private reconnects = 0
     private pendingMessages: IPendingMessageQueue = {}
 
-    public traceMessage = (_: { isOutcoming: boolean, data: string }) => {
+    public traceMessage = (_: { isOutcoming: boolean; data: string }) => {
         // do nothing by default
     }
 
@@ -67,12 +67,7 @@ export class JsonClient implements IJsonClient {
         }
     }
 
-    private rejectPendingMessages(closeEvent: {
-        wasClean: boolean;
-        code: number;
-        reason: string;
-        target: WebSocket;
-    }) {
+    private rejectPendingMessages(closeEvent: { wasClean: boolean; code: number; reason: string; target: WebSocket }) {
         let message = "Connection was closed."
         if (closeEvent.code !== 1000) {
             message = "Connection was aborted. Error code: " + closeEvent.code
@@ -107,7 +102,7 @@ export class JsonClient implements IJsonClient {
         // make sure to have some credentials
         const creds: ICredentials = credentials || this.credentials || new CredentialsBase()
 
-        return this.connectPromise = new Promise<string>((resolve, reject) => {
+        return (this.connectPromise = new Promise<string>((resolve, reject) => {
             // check if already connected
             if (this.webSocket) {
                 resolve(this.sessionId!)
@@ -141,7 +136,7 @@ export class JsonClient implements IJsonClient {
                     // great, now we're connected
                     this.reconnects = 0
                     resolve(this.sessionId)
-                } catch (e: any) {
+                } catch (e) {
                     // report failure
                     this.connected = false
                     this.errorFilter(e)
@@ -163,7 +158,10 @@ export class JsonClient implements IJsonClient {
                 }
 
                 this.reconnects++
-                if (this.options.reconnect && (this.options.maxReconnects < this.reconnects || this.options.maxReconnects === 0)) {
+                if (
+                    this.options.reconnect &&
+                    (this.options.maxReconnects < this.reconnects || this.options.maxReconnects === 0)
+                ) {
                     setTimeout(() => this.connect(), this.options.reconnectInterval)
                 }
 
@@ -178,23 +176,23 @@ export class JsonClient implements IJsonClient {
                 })
 
                 // if message is binary data, convert it to string
-                let json = typeof(message.data) === "string" ? message.data : ""
+                let json = typeof message.data === "string" ? message.data : ""
                 if (message.data instanceof ArrayBuffer) {
                     json = Buffer.from(message.data).toString()
                 }
 
                 // parse message and get its data
                 let parsedMessage: {
-                    id?: string,
-                    method?: string,
-                    params?: object,
-                    result?: object,
-                    error?: IJsonRpcError,
+                    id?: string
+                    method?: string
+                    params?: object
+                    result?: object
+                    error?: IJsonRpcError
                 }
 
                 try {
                     parsedMessage = JSON.parse(json)
-                } catch(e: any) {
+                } catch (e) {
                     // TODO: decide how to handle parse errors
                     this.errorFilter(e)
                     this.errorFilter(new Error("Error parsing JSON: " + json))
@@ -225,7 +223,7 @@ export class JsonClient implements IJsonClient {
                 // it's a notification, fire an event
                 this.subscriptionManager.broadcast(parsedMessage.method!, parsedMessage.params!)
             }
-        })
+        }))
     }
 
     public call<T>(message: IReturn<T>): Promise<T>
@@ -249,7 +247,7 @@ export class JsonClient implements IJsonClient {
         this.pendingMessages[messageId] = pendingMessage
 
         // return a promise awaiting the results of the call
-        return pendingMessage.promise = new Promise((resolve, reject) => {
+        return (pendingMessage.promise = new Promise((resolve, reject) => {
             // store resolve/reject callbacks for later use
             pendingMessage.resolve = resolve
             pendingMessage.reject = reject
@@ -266,12 +264,12 @@ export class JsonClient implements IJsonClient {
             // trace outcoming message
             this.traceMessage({
                 isOutcoming: true,
-                data: serialized
+                data: serialized,
             })
 
             // send it
             this.webSocket.send(serialized)
-        })
+        }))
     }
 
     // one-way calls
@@ -294,7 +292,7 @@ export class JsonClient implements IJsonClient {
         // trace outcoming message
         this.traceMessage({
             isOutcoming: true,
-            data: serialized
+            data: serialized,
         })
 
         // send it

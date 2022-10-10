@@ -25,7 +25,7 @@ describe("EventFilter", () => {
     })
 
     test("missing property doesn't match the filter", () => {
-        let filter = { name: "Bozo"}
+        let filter = { name: "Bozo" }
         expect(EventFilter.matches(filter, undefined)).toBeFalsy()
         expect(EventFilter.matches(filter, null)).toBeFalsy()
         expect(EventFilter.matches(filter, {})).toBeFalsy()

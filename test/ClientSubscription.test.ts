@@ -7,7 +7,9 @@ describe("ClientSubscription", () => {
         sub.eventName = "MyEvent"
 
         let fired: boolean = false
-        sub.eventHandler = () => { fired = true }
+        sub.eventHandler = () => {
+            fired = true
+        }
         sub.invoke({})
 
         expect(fired).toBeTruthy()

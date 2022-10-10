@@ -3,10 +3,14 @@ import { ICredentials } from "./ICredentials"
 import { IJsonClient } from "./IJsonClient"
 
 export class CredentialsBase implements ICredentials {
-    constructor(credentials?: {
-        userName: string,
-        password: string,
-    } | undefined) {
+    constructor(
+        credentials?:
+            | {
+                  userName: string
+                  password: string
+              }
+            | undefined
+    ) {
         // initialize parameters if specified
         if (credentials) {
             this.parameters[AuthRequest.userNameKey] = credentials.userName

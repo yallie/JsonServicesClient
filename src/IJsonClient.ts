@@ -22,5 +22,5 @@ export interface IJsonClient {
     subscribe(event: ISubscription): Promise<() => Promise<void>>
 
     // tracing
-    traceMessage(e: { isOutcoming: boolean, data: string }): void
+    traceMessage(e: { isOutcoming: boolean; data: string }): void
 }

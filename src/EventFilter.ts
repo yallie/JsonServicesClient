@@ -5,9 +5,7 @@ export interface IEventFilter {
 export class EventFilter {
     public static matches(eventFilter?: IEventFilter | null, eventArgs?: { [key: string]: any } | null): boolean {
         // empty filter matches anything
-        if (eventFilter === null ||
-            eventFilter === undefined ||
-            Object.keys(eventFilter).length === 0) {
+        if (eventFilter === null || eventFilter === undefined || Object.keys(eventFilter).length === 0) {
             return true
         }
 
@@ -82,7 +80,10 @@ export class EventFilter {
             return true
         }
 
-        const value = (propertyValue || false).toString().toLowerCase().trim()
+        const value = (propertyValue || false)
+            .toString()
+            .toLowerCase()
+            .trim()
         return filterValue.toLowerCase().trim() === value
     }
 }
