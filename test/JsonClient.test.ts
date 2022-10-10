@@ -141,7 +141,7 @@ conditional("JsonClient", () => {
         try {
             result = await client.call(msg)
             fail("Service call 353 # 181 should yield an internal server error")
-        } catch (e) {
+        } catch (e: any) {
             expect(e.code).toEqual(-32603)
             expect(e.message).toEqual("Internal server error: Bad operation: #")
             expect(e.data.indexOf("Invalid")).toBeGreaterThan(0)
@@ -153,7 +153,7 @@ conditional("JsonClient", () => {
         try {
             result = await client.call(msg)
             fail("Service call 353 % 0 should yield a division by zero")
-        } catch (e) {
+        } catch (e: any) {
             expect(e.code).toEqual(-32603)
             expect(e.message.startsWith("Internal server error")).toBeTruthy() // error message is locale-specific
             expect(e.data.indexOf("DivideByZero")).toBeGreaterThan(0)
@@ -296,7 +296,7 @@ conditional("JsonClient", () => {
         try {
             await promise
             fail("The promise should have been rejected")
-        } catch (e) {
+        } catch (e: any) {
             expect(e.code).toEqual(-32003)
         }
 

@@ -107,7 +107,7 @@ export class JsonClient implements IJsonClient {
         return this.connectPromise = new Promise<string>((resolve, reject) => {
             // check if already connected
             if (this.webSocket) {
-                resolve(this.sessionId)
+                resolve(this.sessionId!)
                 return
             }
 
@@ -138,7 +138,7 @@ export class JsonClient implements IJsonClient {
                     // great, now we're connected
                     this.reconnects = 0
                     resolve(this.sessionId)
-                } catch (e) {
+                } catch (e: any) {
                     // report failure
                     this.connected = false
                     this.errorFilter(e)
@@ -155,7 +155,7 @@ export class JsonClient implements IJsonClient {
                 delete this.connectPromise
 
                 if (closeEvent.code === 1000) {
-                    resolve(this.sessionId)
+                    resolve(this.sessionId!)
                     return // closed normally, don't reconnect
                 }
 
@@ -164,7 +164,7 @@ export class JsonClient implements IJsonClient {
                     setTimeout(() => this.connect(), this.options.reconnectInterval)
                 }
 
-                resolve(this.sessionId)
+                resolve(this.sessionId!)
             }
 
             this.webSocket.onmessage = (message: any) => {
@@ -191,7 +191,7 @@ export class JsonClient implements IJsonClient {
 
                 try {
                     parsedMessage = JSON.parse(json)
-                } catch(e) {
+                } catch(e: any) {
                     // TODO: decide how to handle parse errors
                     this.errorFilter(e)
                     this.errorFilter(new Error("Error parsing JSON: " + json))
