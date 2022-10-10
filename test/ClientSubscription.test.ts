@@ -7,7 +7,7 @@ describe("ClientSubscription", () => {
         sub.eventName = "MyEvent"
 
         let fired: boolean = false
-        sub.eventHandler = () => fired = true
+        sub.eventHandler = () => { fired = true }
         sub.invoke({})
 
         expect(fired).toBeTruthy()
@@ -18,7 +18,7 @@ describe("ClientSubscription", () => {
         sub.subscriptionId = "2"
         sub.eventName = "AnotherEvent"
         sub.eventFilter = {
-            Name: "wa"
+            Name: "wa",
         }
 
         let fired: boolean = false
@@ -46,7 +46,7 @@ describe("ClientSubscription", () => {
         csub.subscriptionId = "3"
         csub.eventName = "ThirdEvent"
         csub.eventFilter = {
-            Name: "wa"
+            Name: "wa",
         }
 
         const subMsg = csub.createSubscriptionMessage()

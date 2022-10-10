@@ -12,4 +12,3 @@ export class Calculate implements IReturn<CalculateResponse> {
         return new CalculateResponse()
     }
 }
-

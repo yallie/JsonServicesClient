@@ -10,4 +10,3 @@ export class GetVersion implements IReturn<GetVersionResponse> {
         return new GetVersionResponse()
     }
 }
-

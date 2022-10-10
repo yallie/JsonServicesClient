@@ -24,11 +24,14 @@ export interface IJsonClientOptions {
 }
 
 export class JsonClient implements IJsonClient {
-    constructor(public url: string, private options: IJsonClientOptions = {
-        reconnect: true,
-        reconnectInterval: 5000,
-        maxReconnects: 10,
-    }) {
+    constructor(
+        public url: string,
+        private options: IJsonClientOptions = {
+            reconnect: true,
+            reconnectInterval: 5000,
+            maxReconnects: 10,
+        }
+    ) {
         this.credentials = options.credentials
 
         // make sure that this argument stays

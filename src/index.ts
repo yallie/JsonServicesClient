@@ -31,7 +31,7 @@ export {
     LogoutMessage,
     SubscriptionMessage,
     VersionRequest,
-    VersionResponse
+    VersionResponse,
 }
 
 export default JsonClient
