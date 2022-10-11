@@ -61,6 +61,13 @@ export class JsonClient implements IJsonClient {
         // do nothing by default
     }
 
+    private errorFilterOnce = (e: Error | IJsonRpcError | unknown) => {
+        if (e && !("errorFiltered" in e)) {
+            this.errorFilter(e)
+            Object.assign(e, { errorFiltered: true })
+        }
+    }
+
     public async disconnect() {
         if (this.webSocket && this.connected) {
             await this.notify(new LogoutMessage())
@@ -78,7 +85,7 @@ export class JsonClient implements IJsonClient {
         }
 
         const error = new Error(message)
-        Object.defineProperty(error, "code", { value: -32003 })
+        Object.assign(error, { code: -32003 })
 
         for (const messageId in this.pendingMessages) {
             if (Object.prototype.hasOwnProperty.call(this.pendingMessages, messageId)) {
@@ -88,7 +95,7 @@ export class JsonClient implements IJsonClient {
                     delete this.pendingMessages[messageId]
 
                     // reject the promise
-                    this.errorFilter(error)
+                    this.errorFilterOnce(error)
                     pending.reject(error)
                 }
             }
@@ -127,7 +134,7 @@ export class JsonClient implements IJsonClient {
 
                 const e = new Error(message)
                 Object.assign(e, { code: -32004 })
-                this.errorFilter(e)
+                this.errorFilterOnce(e)
                 reject(e)
             }
 
@@ -144,11 +151,13 @@ export class JsonClient implements IJsonClient {
                 } catch (error) {
                     // make sure to return error code and the message
                     const e = error || new Error("Couldn't connect to " + this.url)
-                    Object.assign(e, { code: -32004 })
+                    if (!isJsonRpcError(e)) {
+                        Object.assign(e, { code: -32004 })
+                    }
 
                     // report failure
                     this.connected = false
-                    this.errorFilter(e)
+                    this.errorFilterOnce(e)
                     reject(e)
                     delete this.webSocket
                     delete this.connectPromise
@@ -203,8 +212,8 @@ export class JsonClient implements IJsonClient {
                     parsedMessage = JSON.parse(json)
                 } catch (e) {
                     // TODO: decide how to handle parse errors
-                    this.errorFilter(e)
-                    this.errorFilter(new Error("Error parsing JSON: " + json))
+                    this.errorFilterOnce(e)
+                    this.errorFilterOnce(new Error("Error parsing JSON: " + json))
                     return
                 }
 
@@ -217,7 +226,7 @@ export class JsonClient implements IJsonClient {
 
                         // resolve or reject the promise depending on the parsed message data
                         if (parsedMessage.error) {
-                            this.errorFilter(parsedMessage.error)
+                            this.errorFilterOnce(parsedMessage.error)
                             pending.reject(parsedMessage.error)
                             return
                         } else {
@@ -265,7 +274,7 @@ export class JsonClient implements IJsonClient {
             if (this.webSocket === undefined || !this.connected) {
                 delete this.pendingMessages[messageId]
                 const e = new Error("WebSocket not connected")
-                this.errorFilter(e)
+                this.errorFilterOnce(e)
                 reject(e)
                 return
             }
@@ -294,7 +303,7 @@ export class JsonClient implements IJsonClient {
         // fail if not connected
         if (this.webSocket === undefined || !this.connected) {
             const e = new Error("WebSocket not connected")
-            this.errorFilter(e)
+            this.errorFilterOnce(e)
             throw e
         }
 
@@ -327,7 +336,7 @@ export class JsonClient implements IJsonClient {
         const ctor = o && o.constructor
         if (ctor === null) {
             const e = new Error(`${o} doesn't have constructor`)
-            this.errorFilter(e)
+            this.errorFilterOnce(e)
             throw e
         }
 

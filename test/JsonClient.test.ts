@@ -29,7 +29,7 @@ describe("JsonClient", () => {
 
     it("should fail to connect when no server is started", async () => {
         const client = new JsonClient(nonExistingServerUrl)
-        const errors: unknown[]  = []
+        const errors: unknown[] = []
         client.errorFilter = (e) => errors.push(e)
 
         // verify thrown exception
@@ -51,6 +51,8 @@ describe("JsonClient", () => {
         if (isJsonRpcError(error)) {
             expect(error.code).toEqual(-32004)
         }
+
+        client.disconnect()
     })
 })
 
@@ -117,6 +119,83 @@ conditional("JsonClient", () => {
 
         await client.disconnect()
         expect(client.connected).toBeFalsy()
+    })
+
+    it("should fail to authenticate with bad credetials", async () => {
+        const client = new JsonClient(sampleServerUrl)
+        const errors: unknown[] = []
+        client.errorFilter = (e) => errors.push(e)
+
+        // bad credentials that always fail to authenticate
+        client.credentials = {
+            authenticate: () => {
+                const error = new Error("Can't authenticate!")
+                Object.assign(error, { code: -32001 })
+                throw error
+            },
+        }
+
+        // verify thrown exception
+        try {
+            await client.connect()
+            fail("JsonClient wasn't expected to connect with bad credentials")
+        } catch (e) {
+            expect(isJsonRpcError(e)).toBeTruthy()
+            if (isJsonRpcError(e)) {
+                expect(e.code).toEqual(-32001)
+            }
+        }
+
+        // verify error filter
+        expect(errors).not.toBeNull()
+        expect(errors.length).toEqual(1)
+        const error = errors[0]
+        expect(isJsonRpcError(error)).toBeTruthy()
+        if (isJsonRpcError(error)) {
+            expect(error.code).toEqual(-32001)
+        }
+
+        client.disconnect()
+    })
+
+    it("should fail to authenticate with another bad credetials", async () => {
+        const client = new JsonClient(sampleServerUrl)
+        const errors: unknown[] = []
+        client.errorFilter = (e) => errors.push(e)
+
+        // bad credentials that always fail to authenticate
+        client.credentials = {
+            authenticate: async () => {
+                const msg = new Calculate()
+                msg.FirstOperand = 1
+                msg.SecondOperand = 2
+                msg.Operation = "#"
+                await client.call(msg) // throws
+                throw new Error("Never gets here but keeps tsc happy")
+            },
+        }
+
+        // verify thrown exception
+        try {
+            await client.connect()
+            fail("JsonClient wasn't expected to connect with bad credentials")
+        } catch (e) {
+            expect(isJsonRpcError(e)).toBeTruthy()
+            if (isJsonRpcError(e)) {
+                expect(e.code).toEqual(-32002)
+            }
+        }
+
+        // verify error filter
+        expect(errors).not.toBeNull()
+        expect(errors.length).toEqual(1)
+        const error = errors[0]
+        expect(isJsonRpcError(error)).toBeTruthy()
+        if (isJsonRpcError(error)) {
+            expect(error.code).toEqual(-32002)
+        }
+
+        client.disconnect()
     })
 
     it("should connect only once", async () => {
