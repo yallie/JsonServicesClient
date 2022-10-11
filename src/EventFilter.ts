@@ -70,7 +70,7 @@ export class EventFilter {
 
         const value = propertyValue || ""
         const parts = filterValue.toLowerCase().split(",")
-        return parts.findIndex(v => v === value.toString()) >= 0
+        return parts.findIndex((v) => v === value.toString()) >= 0
     }
 
     public static boolMatches(filterValue?: string | null, propertyValue?: boolean | null) {
@@ -80,10 +80,7 @@ export class EventFilter {
             return true
         }
 
-        const value = (propertyValue || false)
-            .toString()
-            .toLowerCase()
-            .trim()
+        const value = (propertyValue || false).toString().toLowerCase().trim()
         return filterValue.toLowerCase().trim() === value
     }
 }

@@ -1,58 +1,64 @@
 {
+  "name": "json-services-client",
   "version": "0.1.0",
   "license": "MIT",
+  "author": "yallie",
   "main": "dist/index.js",
+  "module": "dist/json-services-client.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "# tsdx lint"
-    }
+    "analyze": "size-limit --why",
+    "build": "dts build",
+    "lint": "dts lint",
+    "prepare": "dts build",
+    "size": "size-limit",
+    "start": "dts watch",
+    "test": "dts test"
   },
   "prettier": {
     "printWidth": 120,
     "tabWidth": 4,
     "semi": false,
     "singleQuote": false,
-    "trailingComma": "es5"
+    "trailingComma": "es5",
+    "endOfLine": "crlf"
   },
-  "name": "json-services-client",
-  "author": "Alexey Yakovlev <yallie@yandex.ru>",
-  "module": "dist/json-services-client.esm.js",
+  "jest": {
+    "testEnvironment": "node"
+  },
   "peerDependencies": {
     "@types/ws": "^7.2.1",
     "eventemitter3": "^4.0.0",
     "isomorphic-ws": "^4.0.1",
     "ws": "^7.2.1"
   },
+  "engines": {
+    "node": ">=12"
+  },
+  "size-limit": [
+    {
+      "path": "dist/json-services-client.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/json-services-client.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "devDependencies": {
-    "@babel/core": "^7.8.4",
-    "@types/jest": "^25.1.1",
-    "@types/node": "^13.7.0",
+    "@size-limit/preset-small-lib": "^8.1.0",
+    "@tsconfig/recommended": "^1.0.1",
     "@types/ws": "^7.2.1",
-    "@typescript-eslint/parser": "^2.18.0",
-    "@yarnpkg/pnpify": "^2.0.0-rc.17",
-    "babel-plugin-transform-async-to-promises": "^0.8.15",
-    "eslint": "^6.x",
-    "eslint-plugin-react-hooks": "^2.x",
+    "dts-cli": "^1.6.0",
     "eventemitter3": "^4.0.0",
-    "husky": "^4.2.1",
     "isomorphic-ws": "^4.0.1",
-    "jest": "^25.1.0",
-    "jest-junit": "^10.0.0",
-    "ts-jest": "^25.1.0",
-    "tsdx": "^0.12.3",
-    "tslib": "^1.10.0",
-    "typescript": "^3.7.5",
+    "size-limit": "^8.1.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.8.4",
     "ws": "^7.2.1"
   }
 }

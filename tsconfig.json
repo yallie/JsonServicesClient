@@ -1,4 +1,5 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
   "include": ["src", "types", "test"],
   "compilerOptions": {
     "target": "es2019",

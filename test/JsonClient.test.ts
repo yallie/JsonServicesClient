@@ -65,7 +65,7 @@ conditional("JsonClient", () => {
         expect(sessionId).toBeTruthy()
         expect(client.sessionId).toEqual(sessionId)
 
-        let version = await client.call(new VersionRequest())
+        const version = await client.call(new VersionRequest())
         expect(version).toBeTruthy()
         expect(version.ProductName).toEqual("JsonServicesSampleServer")
         expect(version.EngineVersion).toEqual("0.0.0.1")
@@ -196,15 +196,15 @@ conditional("JsonClient", () => {
     })
 
     it("should connect automatically when subscribing to events", async () => {
-        let client = new JsonClient(sampleServerUrl)
+        const client = new JsonClient(sampleServerUrl)
         expect(client.connected).toBeFalsy()
 
         let fired = false
         expect(fired).toBeFalsy()
 
-        let unsubscribe = await client.subscribe({
+        const unsubscribe = await client.subscribe({
             eventName: "SomeEvent",
-            eventHandler: _ => {
+            eventHandler: (_) => {
                 fired = true
             },
         })
@@ -221,10 +221,10 @@ conditional("JsonClient", () => {
 
         let fired = false
         let resolve: any
-        let promise = new Promise(r => (resolve = r))
+        let promise = new Promise((r) => (resolve = r))
         const unsubscribe = await client.subscribe({
             eventName: "SomeEvent",
-            eventHandler: _ => {
+            eventHandler: (_) => {
                 fired = true
                 resolve(true)
             },
@@ -241,7 +241,7 @@ conditional("JsonClient", () => {
 
         // reset event handler-related stuff
         fired = false
-        promise = new Promise(r => (resolve = r))
+        promise = new Promise((r) => (resolve = r))
         await unsubscribe()
 
         await client.call(msg)
@@ -260,7 +260,7 @@ conditional("JsonClient", () => {
 
         let fired = false
         let error: Error | IJsonRpcError | unknown = null
-        client.errorFilter = e => {
+        client.errorFilter = (e) => {
             fired = true
             error = e
         }
@@ -282,7 +282,7 @@ conditional("JsonClient", () => {
 
         let fired = false
         let error: Error | IJsonRpcError | unknown = null
-        client.errorFilter = e => {
+        client.errorFilter = (e) => {
             fired = true
             error = e
         }

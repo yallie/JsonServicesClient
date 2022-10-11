@@ -143,7 +143,7 @@ export class JsonClient implements IJsonClient {
                     resolve(this.sessionId)
                 } catch (error) {
                     // make sure to return error code and the message
-                    let e = error || new Error("Couldn't connect to " + this.url)
+                    const e = error || new Error("Couldn't connect to " + this.url)
                     Object.assign(e, { code: -32004 })
 
                     // report failure
