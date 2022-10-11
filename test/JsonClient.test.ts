@@ -29,6 +29,10 @@ describe("JsonClient", () => {
 
     it("should fail to connect when no server is started", async () => {
         const client = new JsonClient(nonExistingServerUrl)
+        const errors: unknown[]  = []
+        client.errorFilter = (e) => errors.push(e)
+
+        // verify thrown exception
         try {
             await client.connect()
             fail("JsonClient wasn't expected to connect to non-existing server")
@@ -37,6 +41,15 @@ describe("JsonClient", () => {
             if (isJsonRpcError(e)) {
                 expect(e.code).toEqual(-32004)
             }
+        }
+
+        // verify error filter
+        expect(errors).not.toBeNull()
+        expect(errors.length).toEqual(1)
+        const error = errors[0]
+        expect(isJsonRpcError(error)).toBeTruthy()
+        if (isJsonRpcError(error)) {
+            expect(error.code).toEqual(-32004)
         }
     })
 })
