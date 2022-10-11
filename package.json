@@ -25,7 +25,7 @@
     "semi": false,
     "singleQuote": false,
     "trailingComma": "es5",
-    "endOfLine": "crlf"
+    "endOfLine": "auto"
   },
   "jest": {
     "testEnvironment": "node"
