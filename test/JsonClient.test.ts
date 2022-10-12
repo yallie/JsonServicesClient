@@ -129,9 +129,7 @@ conditional("JsonClient", () => {
         // bad credentials that always fail to authenticate
         client.credentials = {
             authenticate: () => {
-                const error = new Error("Can't authenticate!")
-                Object.assign(error, { code: -32001 })
-                throw error
+                throw new Error("Can't authenticate!")
             },
         }
 
@@ -142,7 +140,8 @@ conditional("JsonClient", () => {
         } catch (e) {
             expect(isJsonRpcError(e)).toBeTruthy()
             if (isJsonRpcError(e)) {
-                expect(e.code).toEqual(-32001)
+                expect(e.code).toEqual(-32004)
+                expect(e.message).toEqual("Can't authenticate!")
             }
         }
 
@@ -152,7 +151,8 @@ conditional("JsonClient", () => {
         const error = errors[0]
         expect(isJsonRpcError(error)).toBeTruthy()
         if (isJsonRpcError(error)) {
-            expect(error.code).toEqual(-32001)
+            expect(error.code).toEqual(-32004)
+            expect(error.message).toEqual("Can't authenticate!")
         }
 
         client.disconnect()
