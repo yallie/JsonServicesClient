@@ -223,6 +223,9 @@ conditional("JsonClient", () => {
         expect(result.Version).toEqual("0.01-alpha")
         expect(client.connected).toBeTruthy()
 
+        await client.connect()
+        expect(client.connected).toBeTruthy()
+
         await client.disconnect()
         expect(client.connected).toBeFalsy()
     })
